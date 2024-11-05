@@ -4,5 +4,5 @@ node_modules
 
 prisma/migrations/
 resources
-src/helpers
-src/shared
+# src/helpers
+# src/shared
