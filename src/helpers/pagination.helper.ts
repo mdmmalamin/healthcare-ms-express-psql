@@ -1,6 +1,6 @@
 type TPaginationOptions = {
-  page?: string;
-  limit?: string;
+  page?: number;
+  limit?: number;
   sortBy?: string;
   sortOrder?: string;
 };
@@ -13,7 +13,7 @@ type TPaginationOptionsResult = {
   sortOrder: string;
 };
 
-export const paginationHelper = (
+export const paginationFormate = (
   options: TPaginationOptions
 ): TPaginationOptionsResult => {
   const page: number = Number(options.page) || 1;

@@ -7,12 +7,12 @@ export const globalErrorHandler = (
   res: Response,
   next: NextFunction
 ) => {
-  console.log(req.rawHeaders);
+  // console.log(req.rawHeaders);
 
   res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
     status: httpStatus.INTERNAL_SERVER_ERROR,
     success: false,
-    message: error?.name || "Something went wrong.",
+    message: error?.message || "Something went wrong.",
     error: error,
   });
 };
