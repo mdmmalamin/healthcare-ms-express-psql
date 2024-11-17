@@ -104,7 +104,7 @@ const changePasswordIntoDB = async (user: any, payload: any) => {
 
   const hashedPassword: string = await bcrypt.hash(
     newPassword,
-    Number(config.bcrypt_salt_rounds)
+    Number(config.bcrypt.salt_rounds)
   );
 
   await prisma.user.update({
@@ -142,7 +142,7 @@ const forgetPassword = async (payload: { email: string }) => {
     config.jwt.reset_password_expires_in as string
   );
 
-  const resetPassLink = `${config.reset_pass_link}?userId=${userData.id}&token=${resetPasswordToken}`;
+  const resetPassLink = `${config.resetPassLink}?userId=${userData.id}&token=${resetPasswordToken}`;
 
   await sendEmail(
     userData.email,
@@ -180,7 +180,7 @@ const resetPassword = async (
 
   const hashedPassword: string = await bcrypt.hash(
     payload.password,
-    Number(config.bcrypt_salt_rounds)
+    Number(config.bcrypt.salt_rounds)
   );
 
   await prisma.user.update({

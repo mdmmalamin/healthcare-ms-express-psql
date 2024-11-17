@@ -20,7 +20,7 @@ const createAdminIntoDB = async (file: TFile | undefined, payload: any) => {
 
   const hashedPassword: string = await bcrypt.hash(
     payload.password,
-    Number(config.bcrypt_salt_rounds)
+    Number(config.bcrypt.salt_rounds)
   );
 
   const userData = {
@@ -60,7 +60,7 @@ const createDoctorIntoDB = async (file: TFile | undefined, payload: any) => {
 
   const hashedPassword: string = await bcrypt.hash(
     payload.password,
-    Number(config.bcrypt_salt_rounds)
+    Number(config.bcrypt.salt_rounds)
   );
 
   const userData = {
@@ -100,7 +100,7 @@ const createPatientIntoDB = async (file: TFile | undefined, payload: any) => {
 
   const hashedPassword: string = await bcrypt.hash(
     payload.password,
-    Number(config.bcrypt_salt_rounds)
+    Number(config.bcrypt.salt_rounds)
   );
 
   const userData = {
