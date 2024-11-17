@@ -1,10 +1,9 @@
 import { httpStatus, prisma } from "../../../shared";
 import * as bcrypt from "bcrypt";
-import jwt, { JwtPayload, Secret } from "jsonwebtoken";
-import { jwtHelper } from "../../../helpers";
+import { Secret } from "jsonwebtoken";
+import { jwtHelper, sendEmail } from "../../../helpers";
 import config from "../../../config";
 import ApiError from "../../errors/ApiError";
-import sendEmail from "../../../utils/sendEmail";
 
 const loginUserFromDB = async (payload: {
   email: string;

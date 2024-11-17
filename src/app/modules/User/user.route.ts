@@ -4,6 +4,7 @@ import { auth, validateRequest } from "../../middlewares";
 import { UserRole } from "@prisma/client";
 import { fileUploader } from "../../../helpers/fileUploader";
 import { UserValidation } from "./user.validation";
+import { formDataParser } from "../../../helpers/formDataParser";
 
 const router = express.Router();
 
@@ -11,11 +12,7 @@ router.post(
   "/create-admin",
   auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
   fileUploader.upload.single("file"),
-  (req: Request, res: Response, next: NextFunction) => {
-    req.body = JSON.parse(req.body.data);
-
-    next();
-  },
+  formDataParser, //? for formData stringify to JSON.parse
   validateRequest(UserValidation.createAdminSchema),
   UserController.createAdmin
 );
@@ -24,11 +21,7 @@ router.post(
   "/create-doctor",
   auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
   fileUploader.upload.single("file"),
-  (req: Request, res: Response, next: NextFunction) => {
-    req.body = JSON.parse(req.body.data);
-
-    next();
-  },
+  formDataParser,
   validateRequest(UserValidation.createDoctorSchema),
   UserController.createDoctor
 );
@@ -36,13 +29,7 @@ router.post(
 router.post(
   "/create-patient",
   fileUploader.upload.single("file"),
-  (req: Request, res: Response, next: NextFunction) => {
-    req.body = JSON.parse(req.body.data);
-
-    console.log(req.body);
-
-    next();
-  },
+  formDataParser,
   validateRequest(UserValidation.createPatientSchema),
   UserController.createPatient
 );
