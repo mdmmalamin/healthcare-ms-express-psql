@@ -3,7 +3,7 @@ import * as bcrypt from "bcrypt";
 import jwt, { JwtPayload, Secret } from "jsonwebtoken";
 import { jwtHelper } from "../../../helpers";
 import config from "../../../config";
-import ApiError from "../../errors/apiError";
+import ApiError from "../../errors/ApiError";
 import sendEmail from "../../../utils/sendEmail";
 
 const loginUserFromDB = async (payload: {
@@ -24,7 +24,7 @@ const loginUserFromDB = async (payload: {
   );
 
   if (!isCorrectPassword) {
-    throw new Error("Password incorrect.");
+    throw new ApiError(httpStatus.BAD_REQUEST, "Password incorrect.");
   }
 
   const tokenPayload = {
@@ -57,7 +57,7 @@ const refreshTokenFromCookies = async (token: string) => {
   try {
     decoded = jwtHelper.verifyToken(token, config.jwt.refresh_secret as Secret);
   } catch (error) {
-    throw new Error("Your are not authorized.");
+    throw new ApiError(httpStatus.UNAUTHORIZED, "Your are not authorized.");
   }
 
   const user = await prisma.user.findUniqueOrThrow({
@@ -100,10 +100,13 @@ const changePasswordIntoDB = async (user: any, payload: any) => {
   );
 
   if (!isCorrectPassword) {
-    throw new Error("Password incorrect.");
+    throw new ApiError(httpStatus.BAD_REQUEST, "Password incorrect.");
   }
 
-  const hashedPassword: string = await bcrypt.hash(newPassword, 12);
+  const hashedPassword: string = await bcrypt.hash(
+    newPassword,
+    Number(config.bcrypt_salt_rounds)
+  );
 
   await prisma.user.update({
     where: {
@@ -176,7 +179,10 @@ const resetPassword = async (
     throw new ApiError(httpStatus.FORBIDDEN, "Forbidden.");
   }
 
-  const hashedPassword: string = await bcrypt.hash(payload.password, 12);
+  const hashedPassword: string = await bcrypt.hash(
+    payload.password,
+    Number(config.bcrypt_salt_rounds)
+  );
 
   await prisma.user.update({
     where: {

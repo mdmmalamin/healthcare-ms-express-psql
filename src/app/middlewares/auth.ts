@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { jwtHelper } from "../../helpers";
 import config from "../../config";
 import { Secret } from "jsonwebtoken";
-import ApiError from "../errors/apiError";
+import ApiError from "../errors/ApiError";
 import { httpStatus } from "../../shared";
 
 export const auth = (...roles: string[]) => {

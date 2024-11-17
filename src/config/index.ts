@@ -7,6 +7,7 @@ dotenv.config({ path: path.join(process.cwd(), ".env") });
 export default {
   env: process.env.NODE_ENV,
   port: process.env.PORT,
+  bcrypt_salt_rounds: process.env.BCRYPT_SALT_ROUNDS,
   jwt: {
     access_secret: process.env.JWT_ACCESS_SECRET,
     access_expires_in: process.env.JWT_ACCESS_EXPIRES_IN,
@@ -19,5 +20,10 @@ export default {
   sendEmail: {
     email: process.env.EMAIL,
     app_pass: process.env.APP_PASS,
+  },
+  cloudinary: {
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
   },
 };
