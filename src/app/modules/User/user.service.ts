@@ -389,7 +389,6 @@ const updateMyAvatarIntoCloudinary = async (user: TAuthUser, file: TFile) => {
           phone: true,
         },
       });
-      console.log(superAdminInfo);
 
       const superAdminAvatarUrl = await avatarData({
         role: user.role,
@@ -415,7 +414,6 @@ const updateMyAvatarIntoCloudinary = async (user: TAuthUser, file: TFile) => {
           phone: true,
         },
       });
-      console.log(adminInfo);
 
       const adminAvatarUrl = await avatarData({
         role: user.role,
@@ -441,7 +439,6 @@ const updateMyAvatarIntoCloudinary = async (user: TAuthUser, file: TFile) => {
           phone: true,
         },
       });
-      console.log(doctorInfo);
 
       const doctorAvatarUrl = await avatarData({
         role: user.role,
@@ -467,7 +464,6 @@ const updateMyAvatarIntoCloudinary = async (user: TAuthUser, file: TFile) => {
           phone: true,
         },
       });
-      console.log(patientInfo);
 
       const patientAvatarUrl = await avatarData({
         role: user.role,
