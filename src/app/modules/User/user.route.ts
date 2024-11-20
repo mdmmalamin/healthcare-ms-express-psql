@@ -47,4 +47,24 @@ router.patch(
   UserController.changeProfileStatus
 );
 
+router.get(
+  "/me",
+  auth(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.DOCTOR, UserRole.PATIENT),
+  UserController.getMyProfile
+);
+
+router.patch(
+  "/update-my-profile",
+  auth(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.DOCTOR, UserRole.PATIENT),
+  // validateRequest(UserValidation.updateStatusSchema),
+  UserController.updateMyProfile
+);
+
+router.patch(
+  "/update-my-avatar",
+  auth(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.DOCTOR, UserRole.PATIENT),
+  fileUploader.upload.single("file"),
+  UserController.updateMyAvatar
+);
+
 export const UserRoutes = router;

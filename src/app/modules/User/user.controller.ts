@@ -7,6 +7,7 @@ import {
   queryParamsPick,
 } from "../../../shared";
 import { userFilterableFields, userOptionsFields } from "./user.constant";
+import { TAuthUser, TFile } from "../../interfaces";
 
 const createAdmin = catchAsync(async (req: Request, res: Response) => {
   const file = req.file;
@@ -77,6 +78,55 @@ const changeProfileStatus = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getMyProfile = catchAsync(
+  async (req: Request & { user?: TAuthUser }, res: Response) => {
+    const user = req.user;
+    const result = await UserService.getMyProfileFromDB(user as TAuthUser);
+
+    apiResponse(res, {
+      statusCode: httpStatus.CREATED,
+      success: true,
+      message: "My profile data retrieved successfully.",
+      data: result,
+    });
+  }
+);
+
+const updateMyProfile = catchAsync(
+  async (req: Request & { user?: TAuthUser }, res: Response) => {
+    const user = req.user;
+    const result = await UserService.updateMyProfileIntoDB(
+      user as TAuthUser,
+      req.body
+    );
+
+    apiResponse(res, {
+      statusCode: httpStatus.CREATED,
+      success: true,
+      message: "My profile data updated successfully.",
+      data: result,
+    });
+  }
+);
+
+const updateMyAvatar = catchAsync(
+  async (req: Request & { user?: TAuthUser }, res: Response) => {
+    const user = req.user;
+    const file = req.file;
+    const result = await UserService.updateMyAvatarIntoCloudinary(
+      user as TAuthUser,
+      file as TFile
+    );
+
+    apiResponse(res, {
+      statusCode: httpStatus.CREATED,
+      success: true,
+      message: "My profile avatar updated successfully.",
+      data: result,
+    });
+  }
+);
+
 export const UserController = {
   createAdmin,
   createDoctor,
@@ -84,4 +134,8 @@ export const UserController = {
 
   retrievedAllUser,
   changeProfileStatus,
+
+  getMyProfile,
+  updateMyProfile,
+  updateMyAvatar,
 };
