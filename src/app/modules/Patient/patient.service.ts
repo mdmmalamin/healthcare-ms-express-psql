@@ -6,11 +6,11 @@ import { patientSearchableFields } from "./patient.constant";
 import { prisma } from "../../../shared";
 
 const getAllFromDB = async (
-  params: TPatientFilterRequest,
+  filters: TPatientFilterRequest,
   options: TPaginationOptions
 ) => {
   const { page, skip, limit, sortBy, sortOrder } = paginationFormate(options);
-  const { searchTerm, ...filterData } = params;
+  const { searchTerm, ...filterData } = filters;
 
   const andConditions: Prisma.PatientWhereInput[] = [];
 

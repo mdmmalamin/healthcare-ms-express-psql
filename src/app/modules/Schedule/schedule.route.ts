@@ -11,10 +11,6 @@ router.post(
   ScheduleController.createSchedule
 );
 
-router.get(
-  "/",
-  // auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
-  ScheduleController.getAllSchedule
-);
+router.get("/", auth(UserRole.DOCTOR), ScheduleController.getAllSchedule);
 
 export const ScheduleRoutes = router;
