@@ -4,7 +4,7 @@ import { auth, validateRequest } from "../../middlewares";
 import { UserRole } from "@prisma/client";
 import { fileUploader } from "../../../helpers/fileUploader";
 import { UserValidation } from "./user.validation";
-import { formDataParser } from "../../../helpers/formDataParser";
+import { formDataParser } from "../../../helpers";
 
 const router = express.Router();
 

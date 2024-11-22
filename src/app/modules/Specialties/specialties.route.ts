@@ -2,8 +2,7 @@ import express from "express";
 import { UserRole } from "@prisma/client";
 import { auth, validateRequest } from "../../middlewares";
 import { SpecialtiesController } from "./specialties.controller";
-import { fileUploader } from "../../../helpers";
-import { formDataParser } from "../../../helpers/formDataParser";
+import { fileUploader, formDataParser } from "../../../helpers";
 import { SpecialtiesValidation } from "./specialties.validation";
 
 const router = express.Router();
