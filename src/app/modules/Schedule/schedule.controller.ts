@@ -27,12 +27,14 @@ const getAllSchedule: RequestHandler = catchAsync(async (req, res) => {
   //   options
   // );
 
+  const result = await ScheduleService.getAllScheduleFromDB();
+
   apiResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: "All schedules retrieved successfully.",
     // meta: meta,
-    data: null,
+    data: result,
   });
 });
 
