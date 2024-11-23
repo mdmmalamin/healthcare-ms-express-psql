@@ -121,6 +121,14 @@ const getAllScheduleFromDB = async (
   };
 };
 
+const getScheduleByIdFromBD = async (id: string) => {
+  console.log("getScheduleByIdFromBD");
+};
+
+const hardDeleteScheduleFromDB = async (id: string) => {
+  console.log("hardDeleteScheduleFromDB");
+};
+
 export const ScheduleService = {
   createScheduleIntoDB,
   getAllScheduleFromDB,

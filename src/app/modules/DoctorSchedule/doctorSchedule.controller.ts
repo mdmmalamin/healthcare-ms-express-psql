@@ -1,7 +1,16 @@
 import { Request, Response } from "express";
-import { apiResponse, catchAsync, httpStatus } from "../../../shared";
+import {
+  apiResponse,
+  catchAsync,
+  httpStatus,
+  queryParamsPick,
+} from "../../../shared";
 import { DoctorScheduleService } from "./doctorSchedule.service";
 import { TAuthUser } from "../../interfaces";
+import {
+  doctorScheduleFilterableFields,
+  doctorScheduleOptionsFields,
+} from "./doctorSchedule.constant";
 
 const createDoctorSchedule = catchAsync(
   async (req: Request & { user?: TAuthUser }, res: Response) => {
@@ -20,24 +29,49 @@ const createDoctorSchedule = catchAsync(
   }
 );
 
-// const getAllSchedule: RequestHandler = catchAsync(async (req, res) => {
-//   // const filters = queryParamsPick(req.query, patientFilterableFields);
-//   // const options = queryParamsPick(req.query, patientOptionsFields);
+const getMySchedule = catchAsync(
+  async (req: Request & { user?: TAuthUser }, res: Response) => {
+    const user = req.user;
+    const filters = queryParamsPick(req.query, doctorScheduleFilterableFields);
+    const options = queryParamsPick(req.query, doctorScheduleOptionsFields);
 
-//   // const { meta, data } = await ScheduleService.getAllScheduleFromDB(
-//   //   filters,
-//   //   options
-//   // );
+    const { meta, data } = await DoctorScheduleService.getMyScheduleFromDB(
+      user as TAuthUser,
+      filters,
+      options
+    );
 
-//   apiResponse(res, {
-//     statusCode: httpStatus.OK,
-//     success: true,
-//     message: "All doctor schedules retrieved successfully.",
-//     // meta: meta,
-//     data: null,
-//   });
-// });
+    apiResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "My schedules retrieved successfully.",
+      meta: meta,
+      data: data,
+    });
+  }
+);
+
+const hardDeleteMySchedule = catchAsync(
+  async (req: Request & { user?: TAuthUser }, res: Response) => {
+    const user = req.user;
+    const { id } = req.params;
+
+    const result = await DoctorScheduleService.hardDeleteMyScheduleFromDB(
+      user as TAuthUser,
+      id
+    );
+
+    apiResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "My schedules deleted successfully.",
+      data: result,
+    });
+  }
+);
 
 export const DoctorScheduleController = {
   createDoctorSchedule,
+  getMySchedule,
+  hardDeleteMySchedule,
 };
