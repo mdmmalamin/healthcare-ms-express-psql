@@ -23,4 +23,10 @@ router.delete(
   DoctorScheduleController.hardDeleteMySchedule
 );
 
+router.get(
+  "/",
+  auth(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.DOCTOR, UserRole.PATIENT),
+  DoctorScheduleController.getAllDoctorSchedule
+);
+
 export const DoctorScheduleRoutes = router;

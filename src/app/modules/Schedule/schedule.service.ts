@@ -122,14 +122,27 @@ const getAllScheduleFromDB = async (
 };
 
 const getScheduleByIdFromBD = async (id: string) => {
-  console.log("getScheduleByIdFromBD");
+  return await prisma.schedule.findUniqueOrThrow({
+    where: { id },
+    include: {
+      doctorSchedules: true,
+    },
+  });
 };
 
 const hardDeleteScheduleFromDB = async (id: string) => {
-  console.log("hardDeleteScheduleFromDB");
+  await prisma.schedule.findUniqueOrThrow({
+    where: { id },
+  });
+
+  return await prisma.schedule.delete({
+    where: { id },
+  });
 };
 
 export const ScheduleService = {
   createScheduleIntoDB,
   getAllScheduleFromDB,
+  getScheduleByIdFromBD,
+  hardDeleteScheduleFromDB,
 };

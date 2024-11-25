@@ -70,8 +70,27 @@ const hardDeleteMySchedule = catchAsync(
   }
 );
 
+const getAllDoctorSchedule = catchAsync(async (req: Request, res: Response) => {
+  const filters = queryParamsPick(req.query, doctorScheduleFilterableFields);
+  const options = queryParamsPick(req.query, doctorScheduleOptionsFields);
+  const { meta, data } = await DoctorScheduleService.getAllDoctorScheduleFromDB(
+    filters,
+    options
+  );
+
+  apiResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "My schedules deleted successfully.",
+    meta: meta,
+    data: data,
+  });
+});
+
 export const DoctorScheduleController = {
   createDoctorSchedule,
   getMySchedule,
   hardDeleteMySchedule,
+
+  getAllDoctorSchedule,
 };

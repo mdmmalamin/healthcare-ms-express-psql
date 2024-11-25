@@ -1,7 +1,13 @@
 export const doctorScheduleFilterableFields: string[] = [
+  // "startDate",
+  // "endDate",
+  // "isBooked",
+
+  "searchTerm",
+  "isBooked",
+  "doctorId",
   "startDate",
   "endDate",
-  "isBooked",
 ];
 
 export const doctorScheduleOptionsFields: string[] = [
